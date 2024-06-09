@@ -87,7 +87,9 @@ class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
   }
 
   void _onScroll() {
-    if (!_loadingMoreNotifier.value && scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+    if (!_loadingMoreNotifier.value &&
+        scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
       // Load more items
       setState(() {
         _loadingMoreNotifier.value = true;
@@ -136,18 +138,23 @@ class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
                         return ListView.separated(
                           physics: BouncingScrollPhysics(),
                           controller: scrollController,
-                          itemCount: isLoading ? widget.data.length + 1 : widget.data.length,
+                          itemCount: isLoading
+                              ? widget.data.length + 1
+                              : widget.data.length,
                           itemBuilder: (context, index) {
                             if (index == widget.data.length && isLoading) {
                               return widget.customIndicator ??
                                   Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 8.0),
                                     child: Center(
-                                      child: CircularProgressIndicator(color: widget.progressIndicatorColor),
+                                      child: CircularProgressIndicator(
+                                          color: widget.progressIndicatorColor),
                                     ),
                                   );
                             } else {
-                              return widget.itemBuilder(context, index, widget.data[index]);
+                              return widget.itemBuilder(
+                                  context, index, widget.data[index]);
                             }
                           },
                           separatorBuilder: (context, index) {

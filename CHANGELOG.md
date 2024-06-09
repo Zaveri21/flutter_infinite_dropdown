@@ -1,3 +1,8 @@
+## 1.0.2+2
+
+- Readme file updated.
+- code formate.
+
 ## 1.0.2+1
 
 - Readme file updated.

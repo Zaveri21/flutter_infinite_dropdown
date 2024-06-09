@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
 
-
-
 void main() {
   runApp(const MyApp());
 }
@@ -73,7 +71,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   //  });
                   Future.delayed(Duration(seconds: 2), () {
-                    lsData.addAll(['11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
+                    lsData.addAll([
+                      '11',
+                      '12',
+                      '13',
+                      '14',
+                      '15',
+                      '16',
+                      '17',
+                      '18',
+                      '19',
+                      '20'
+                    ]);
                     controller.stopLoading();
                   });
                 } catch (ex) {

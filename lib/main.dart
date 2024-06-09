@@ -69,8 +69,19 @@ class _MyHomePageState extends State<MyHomePage> {
               onBottomRefresh: () async {
                 try {
                   Future.delayed(Duration(seconds: 2), () {
-                    listData.addAll(['11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
-                    
+                    listData.addAll([
+                      '11',
+                      '12',
+                      '13',
+                      '14',
+                      '15',
+                      '16',
+                      '17',
+                      '18',
+                      '19',
+                      '20'
+                    ]);
+
                     // To stop loader after API or Async task call
                     controller.stopLoading();
                   });

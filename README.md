@@ -1,5 +1,10 @@
 This Flutter package helps create a dropdown which is fully customized And also provides a feature pagination.
 
+<a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
+<a href="https://opensource.org/licenses/Apache-2.0" target="_blank"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102"/></a>
+<a href="https://github.com/Zaveri21/flutter_infinite_dropdown/issues" target="_blank"><img alt="GitHub: Zaveri21" src="https://img.shields.io/github/issues-raw/Zaveri21/flutter_infinite_dropdown?style=flat" /></a>
+<img src="https://img.shields.io/github/last-commit/Zaveri21/flutter_infinite_dropdown" />
+
 ## ✨ Features 
 - ⭐️ custom loader in dropdown.  
 - ⭐️ customized dropdown list item.
@@ -89,15 +94,11 @@ from the package authors, and more. -->
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 20px !important;width: 86px !important;" >
 </a>
 
-<a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
-<a href="https://opensource.org/licenses/Apache-2.0" target="_blank"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102"/></a>
-<a href="https://github.com/Zaveri21/flutter_infinite_dropdown/issues" target="_blank"><img alt="GitHub: bhoominn" src="https://img.shields.io/github/issues-raw/Zaveri21/flutter_infinite_dropdown?style=flat" /></a>
-<img src="https://img.shields.io/github/last-commit/Zaveri21/flutter_infinite_dropdown" />
-
-<a href="https://github.com/bhooZaveri21"><img alt="GitHub: Zaveri21" src="https://img.shields.io/github/followers/Zaveri21?label=Follow&style=social" /></a>
 <a href="https://github.com/Zaveri21/flutter_infinite_dropdown"><img src="https://img.shields.io/github/stars/Zaveri21/flutter_infinite_dropdown?style=social" /></a>
 
-<a href="https://saythanks.io/to/Zaveri21" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg"/></a> ss
+<a href="https://github.com/Zaveri21"><img alt="GitHub:Zaveri21" src="https://img.shields.io/github/followers/Zaveri21?label=Follow&style=social" /></a>
+
+<a href="https://saythanks.io/to/Zaveri21" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg"/></a>
 
 ## License
 
