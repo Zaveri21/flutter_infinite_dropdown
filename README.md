@@ -97,7 +97,7 @@ from the package authors, and more. -->
 <a href="https://github.com/bhooZaveri21"><img alt="GitHub: Zaveri21" src="https://img.shields.io/github/followers/Zaveri21?label=Follow&style=social" /></a>
 <a href="https://github.com/Zaveri21/flutter_infinite_dropdown"><img src="https://img.shields.io/github/stars/Zaveri21/flutter_infinite_dropdown?style=social" /></a>
 
-<a href="https://saythanks.io/to/Zaveri21" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg"/></a> ss
+<a href="https://saythanks.io/to/Zaveri21" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg"/></a>
 
 ## License
 
