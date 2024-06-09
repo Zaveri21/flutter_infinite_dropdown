@@ -1,7 +1,6 @@
-///
-/// More dartdocs go here.
+// flutter_infinite_dropdown
 // library;
 
 export 'src/flutter_infinite_dropdown.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+// Export any libraries intended for clients of this package.

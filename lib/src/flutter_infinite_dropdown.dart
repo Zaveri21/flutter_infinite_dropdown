@@ -7,22 +7,44 @@ class InfiniteDropdownController {
     _dropdownState = dropdownState;
   }
 
+  /// stop dropdown loader
   void stopLoading() {
     _dropdownState?.endBottomRefresh();
   }
 }
 
 class InfiniteDropdown<T> extends StatefulWidget {
+  /// dropdown controller to hide loader after api call
   final InfiniteDropdownController? controller;
+
+  /// source widget bellow dropdown will display.
   final Widget sourceWidget;
+
+  /// dropdown custom widget
   final Widget dropdownWidget;
+
+  /// dropdown list type data
   final List<T> data;
-  final Widget Function(BuildContext context, T item) itemBuilder;
+
+  /// dropdown item builder to custom dropdown list item
+  final Widget Function(BuildContext context, int index, T item) itemBuilder;
+
+  /// spacing between dropdown and source widget
   final double? spacing;
+
+  /// Dropdown height default 120
   final double? dropdownHeight;
+
+  ///
   final Future<void> Function()? onBottomRefresh;
+
+  /// display divider after each dropdown item
   final bool isSeparator;
+
+  /// progressIndicatorColor
   final Color? progressIndicatorColor;
+
+  /// custom widget to show custom loader
   final Widget? customIndicator;
 
   InfiniteDropdown({
@@ -125,7 +147,7 @@ class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
                                     ),
                                   );
                             } else {
-                              return widget.itemBuilder(context, widget.data[index]);
+                              return widget.itemBuilder(context, index, widget.data[index]);
                             }
                           },
                           separatorBuilder: (context, index) {
@@ -140,7 +162,7 @@ class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
             ),
           );
 
-          Overlay.of(context)!.insert(_overlayEntry!);
+          Overlay.of(context).insert(_overlayEntry!);
         }
       },
       child: widget.sourceWidget,

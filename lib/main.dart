@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
 
-
-
 void main() {
   runApp(const MyApp());
 }
@@ -32,7 +30,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> lsData = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  // Initial data
+  List<String> listData = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
   InfiniteDropdownController controller = InfiniteDropdownController();
 
   @override
@@ -46,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Button source widget bellow dropdown will display
             InfiniteDropdown(
               controller: controller,
               sourceWidget: Container(
@@ -59,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              data: lsData,
-              itemBuilder: (context, index) => ListTile(
+              data: listData, // dropdown list data
+              itemBuilder: (context, index, item) => ListTile(
                 title: Text('Option $index'),
                 onTap: () {
                   print('Option 1 selected');
@@ -68,12 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onBottomRefresh: () async {
                 try {
-                  //   Future.delayed(Duration(seconds: 2), () {
-                  //   lsData.addAll(['11','12','13','14','15','16','17','18','19','20']);
-
-                  //  });
                   Future.delayed(Duration(seconds: 2), () {
-                    lsData.addAll(['11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
+                    listData.addAll(['11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
+                    
+                    // To stop loader after API or Async task call
                     controller.stopLoading();
                   });
                 } catch (ex) {

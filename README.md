@@ -1,25 +1,41 @@
-TODO: This Flutter package helps create a dropdown which is fully customized And also provides a feature pagination.
+This Flutter package helps create a dropdown which is fully customized And also provides a feature pagination.
 
-## Features
+## ✨ Features 
+- ⭐️ custom loader in dropdown.  
+- ⭐️ customized dropdown list item.
+- ⭐️ pagination support. 
+- ⭐️ each item divider optional support.
 
-TODO: 
-- You can show custom loader in dropdown.  
-- You can customized dropdown list item.
-- provide pagination feature. 
+<table>
+  <tr>
+    <td><img src="gifs/android_flutter_dropdown.gif" alt="Android" width="300"></td>
+    <td><img src="gifs/ios_flutter_dropdown.gif" alt="iOS" width="300"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Android</b></td>
+    <td align="center"><b>iOS</b></td>
+  </tr>
+</table>
 
 
-## Getting started
+## **Installation**
+ Add this to your package's `pubspec.yaml` file:
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+```yaml
+dependencies:
+  flutter_infinite_dropdown: ^1.0.0
+```
+
+```dart
+import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
+```
 
 ## Usage
-
-TODO: To use this package, add flutter_infinite_dropdown as a dependency in your [pubspec.yaml] file. And add this import to your file
-to `import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
+To use this package, add flutter_infinite_dropdown as a dependency in your `pubspec.yaml` file. And add this import to your file to `import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
 ` 
 
 ```dart
+// Usage Example
 Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -60,13 +76,18 @@ Column(
 )
 ```
 
+## ⏳ Work-in-Progress (WIP)
+- 🖥️ Web support (WIP).
+
  ## Additional information
 
-<!--TODO: Tell users more about the package: where to find more information, how to 
+<!--Tell users more about the package: where to find more information, how to 
 contribute to the package, how to file issues, what response they can expect 
 from the package authors, and more. -->
 
-<a href="https://www.buymeacoffee.com/vishaljhavu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/vishaljhavu" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 20px !important;width: 86px !important;" >
+</a>
 
 <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
 <a href="https://opensource.org/licenses/Apache-2.0" target="_blank"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102"/></a>
