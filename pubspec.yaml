@@ -1,15 +1,10 @@
 name: flutter_infinite_dropdown
 description: This Flutter package helps create a dropdown which is fully customized And also provides a feature pagination.
-version: 1.0.2
+version: 1.0.2+1
+
 homepage: https://github.com/Zaveri21/flutter_infinite_dropdown
 repository: https://github.com/Zaveri21/flutter_infinite_dropdown
 issue_tracker: https://github.com/Zaveri21/flutter_infinite_dropdown/issues
-screenshots:
-  - description: "Android infinite dropdown"
-    path: gifs/android_flutter_dropdown.gif
-  - description: "iOS infinite dropdown"
-    path: gifs/ios_flutter_dropdown.gif
-
 
 environment:
   sdk: ">=2.18.6 <4.0.0"

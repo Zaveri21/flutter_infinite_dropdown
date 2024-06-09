@@ -1,3 +1,7 @@
+## 1.0.2+1
+
+- Readme file updated.
+
 ## 1.0.2
 
 - Minor improvements. supported platforms updated.

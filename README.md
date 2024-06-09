@@ -8,8 +8,8 @@ This Flutter package helps create a dropdown which is fully customized And also 
 
 <table>
   <tr>
-    <td><img src="gifs/android_flutter_dropdown.gif" alt="Android" width="300"></td>
-    <td><img src="gifs/ios_flutter_dropdown.gif" alt="iOS" width="300"></td>
+    <td><img src="https://github.com/Zaveri21/flutter_infinite_dropdown/raw/main/gifs/android_flutter_dropdown.gif" alt="Android" width="300"></td>
+    <td><img src="https://github.com/Zaveri21/flutter_infinite_dropdown/raw/main/gifs/ios_flutter_dropdown.gif" alt="iOS" width="300"></td>
   </tr>
   <tr>
     <td align="center"><b>Android</b></td>
@@ -97,7 +97,7 @@ from the package authors, and more. -->
 <a href="https://github.com/bhooZaveri21"><img alt="GitHub: Zaveri21" src="https://img.shields.io/github/followers/Zaveri21?label=Follow&style=social" /></a>
 <a href="https://github.com/Zaveri21/flutter_infinite_dropdown"><img src="https://img.shields.io/github/stars/Zaveri21/flutter_infinite_dropdown?style=social" /></a>
 
-<a href="https://saythanks.io/to/Zaveri21" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg"/></a>
+<a href="https://saythanks.io/to/Zaveri21" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg"/></a> ss
 
 ## License
 
