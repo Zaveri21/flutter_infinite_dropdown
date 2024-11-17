@@ -1,4 +1,4 @@
-import 'package:example/main.dart';
+import 'package:example/example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
 

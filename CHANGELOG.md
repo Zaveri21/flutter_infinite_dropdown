@@ -1,3 +1,9 @@
+## 1.0.2+3
+🛠️ Minor code structure changes.
+🛠️ Version bump.
+📝 Readme file updated.
+
+
 ## 1.0.2+2
 
 - Readme file updated.
