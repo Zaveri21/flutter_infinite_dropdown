@@ -84,22 +84,31 @@ Column(
 ## ⏳ Work-in-Progress (WIP)
 - 🖥️ Web support (WIP).
 
- ## Additional information
+ ## Additional Information
 
-<!--Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more. -->
+Tell users more about the package: where to find more information, how to contribute to the package, how to file issues, what response they can expect from the package authors, and more.
 
+### Support Me
 <a href="https://www.buymeacoffee.com/vishaljhavu" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 20px !important;width: 86px !important;" >
 </a>
 
-<a href="https://github.com/Zaveri21/flutter_infinite_dropdown"><img src="https://img.shields.io/github/stars/Zaveri21/flutter_infinite_dropdown?style=social" /></a>
+### GitHub
+<a href="https://github.com/Zaveri21/flutter_infinite_dropdown">
+  <img src="https://img.shields.io/github/stars/Zaveri21/flutter_infinite_dropdown?style=social" alt="GitHub Stars" />
+</a>
+<a href="https://github.com/Zaveri21">
+  <img src="https://img.shields.io/github/followers/Zaveri21?label=Follow&style=social" alt="GitHub Followers" />
+</a>
 
-<a href="https://github.com/Zaveri21"><img alt="GitHub:Zaveri21" src="https://img.shields.io/github/followers/Zaveri21?label=Follow&style=social" /></a>
-
-<a href="https://saythanks.io/to/Zaveri21" target="_blank"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg"/></a>
+### Say Thanks
+<a href="https://saythanks.io/to/Zaveri21" target="_blank">
+  <img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks" />
+</a>
 
 ## License
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+<a href="/LICENSE">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" style="style="height: 20px">
+</a>
+
