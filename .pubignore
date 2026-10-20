@@ -1,0 +1,5 @@
+.pubignore
+.DS_Store
+.idea/
+coverage/
+*.iml
