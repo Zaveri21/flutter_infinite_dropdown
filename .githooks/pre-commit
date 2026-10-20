@@ -1,0 +1,41 @@
+#!/bin/sh
+# Pre-commit hook: format check → analyze → test
+# Setup for all devs: run `git config core.hooksPath .githooks` once after cloning
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo "${YELLOW}Running pre-commit checks...${NC}"
+
+# ─── 1. Dart Format ──────────────────────────────────────────────────────────
+echo "\n${YELLOW}[1/3] Checking dart format...${NC}"
+dart format --output=none --set-exit-if-changed lib/ test/
+if [ $? -ne 0 ]; then
+  echo "${RED}✗ Format check failed.${NC}"
+  echo "  Run: dart format lib/ test/"
+  exit 1
+fi
+echo "${GREEN}✓ Format OK${NC}"
+
+# ─── 2. Flutter Analyze ──────────────────────────────────────────────────────
+echo "\n${YELLOW}[2/3] Running flutter analyze...${NC}"
+flutter analyze
+if [ $? -ne 0 ]; then
+  echo "${RED}✗ Analysis failed. Fix the issues above before committing.${NC}"
+  exit 1
+fi
+echo "${GREEN}✓ Analyze OK${NC}"
+
+# ─── 3. Flutter Test ─────────────────────────────────────────────────────────
+echo "\n${YELLOW}[3/3] Running flutter test...${NC}"
+flutter test
+if [ $? -ne 0 ]; then
+  echo "${RED}✗ Tests failed. Fix the failing tests before committing.${NC}"
+  exit 1
+fi
+echo "${GREEN}✓ Tests OK${NC}"
+
+echo "\n${GREEN}All checks passed. Proceeding with commit.${NC}"
+exit 0

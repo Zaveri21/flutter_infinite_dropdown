@@ -1,15 +1,20 @@
-This Flutter package helps create a dropdown which is fully customized And also provides a feature pagination.
+# Flutter Infinite Dropdown
 
-<a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
-<a href="https://opensource.org/licenses/Apache-2.0" target="_blank"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102"/></a>
-<a href="https://github.com/Zaveri21/flutter_infinite_dropdown/issues" target="_blank"><img alt="GitHub: Zaveri21" src="https://img.shields.io/github/issues-raw/Zaveri21/flutter_infinite_dropdown?style=flat" /></a>
-<img src="https://img.shields.io/github/last-commit/Zaveri21/flutter_infinite_dropdown" />
+A fully customizable Flutter dropdown widget with built-in infinite scroll pagination — no boilerplate, just drop it in. 🚀
 
-## ✨ Features 
-- ⭐️ custom loader in dropdown.  
-- ⭐️ customized dropdown list item.
-- ⭐️ pagination support. 
-- ⭐️ each item divider optional support.
+<p>
+  <a href="https://pub.dev/packages/flutter_infinite_dropdown"><img src="https://img.shields.io/pub/v/flutter_infinite_dropdown.svg" alt="pub version"/></a>
+  <a href="https://pub.dev/packages/flutter_infinite_dropdown/score"><img src="https://img.shields.io/pub/points/flutter_infinite_dropdown" alt="pub points"/></a>
+  <a href="https://pub.dev/packages/flutter_infinite_dropdown/score"><img src="https://img.shields.io/pub/likes/flutter_infinite_dropdown" alt="pub likes"/></a>
+  <a href="https://pub.dev/packages/flutter_infinite_dropdown/score"><img src="https://img.shields.io/pub/popularity/flutter_infinite_dropdown" alt="pub popularity"/></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License"/></a>
+  <a href="https://github.com/Zaveri21/flutter_infinite_dropdown/issues"><img src="https://img.shields.io/github/issues-raw/Zaveri21/flutter_infinite_dropdown?style=flat" alt="GitHub issues"/></a>
+  <img src="https://img.shields.io/github/last-commit/Zaveri21/flutter_infinite_dropdown" alt="last commit"/>
+</p>
+
+---
+
+## Preview
 
 <table>
   <tr>
@@ -22,93 +27,175 @@ This Flutter package helps create a dropdown which is fully customized And also 
   </tr>
 </table>
 
+---
 
-## **Installation**
- Add this to your package's `pubspec.yaml` file:
+## Features
 
-```yaml
-dependencies:
-  flutter_infinite_dropdown: ^1.0.0
+- Fully customizable dropdown list items via `itemBuilder`
+- Infinite scroll pagination — fires `onBottomRefresh` when the user reaches the bottom
+- Custom loading indicator (or use the default `CircularProgressIndicator`)
+- Optional item dividers with `isSeparator`
+- Controller API to stop the loader after your API call completes
+- Zero external dependencies — only Flutter
+
+---
+
+## Installation
+
+```console
+flutter pub add flutter_infinite_dropdown
 ```
 
 ```dart
 import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
 ```
 
-## Usage
-To use this package, add flutter_infinite_dropdown as a dependency in your `pubspec.yaml` file. And add this import to your file to `import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
-` 
+> **Requires** Flutter ≥ 3.24.0 · Dart ≥ 3.5.0
+
+---
+
+## Quick Start
 
 ```dart
-// Usage Example
-Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-    InfiniteDropdown(
-        controller: controller,
-        sourceWidget: Container(
-        width: 200,
-        height: 40,
-        color: Colors.blue,
-        child: Center(
-            child: Text(
-            'Tap here to open dropdown',
-            style: TextStyle(color: Colors.white),
-            ),
-        ),
-        ),
-        data: lsData,
-        itemBuilder: (context, index) => ListTile(
-        title: Text('Option $index'),
-        onTap: () {
-            print('Option 1 selected');
-        },
-        ),
-        onBottomRefresh: () async {
-            try {
-                    Future.delayed(Duration(seconds: 2), () {
-                    lsData.addAll(['11', '12', '13', '14', '15', '16', '17', '18', '19', '20']);
-                    
-                    controller.stopLoading();// <--- Stop loader
-                    });
-                } catch (ex) {
-                     print("Error: $ex");
-                }
-            },
-            dropdownWidget: Container(),
-        )
-    ],
+final controller = InfiniteDropdownController();
+List<String> items = ['Apple', 'Banana', 'Cherry'];
+
+InfiniteDropdown<String>(
+  controller: controller,
+  sourceWidget: const Text('Tap to open'),
+  dropdownWidget: const SizedBox.shrink(),
+  data: items,
+  itemBuilder: (context, index, item) => ListTile(title: Text(item)),
+  onBottomRefresh: () async {
+    await Future.delayed(const Duration(seconds: 2));
+    items.addAll(['Date', 'Elderberry', 'Fig']);
+    controller.stopLoading(); // hide the loader
+  },
 )
 ```
 
-## ⏳ Work-in-Progress (WIP)
-- 🖥️ Web support (WIP).
+---
 
- ## Additional Information
+## InfiniteDropdown
 
-Tell users more about the package: where to find more information, how to contribute to the package, how to file issues, what response they can expect from the package authors, and more.
+### Parameters
 
-### Support Me
-<a href="https://www.buymeacoffee.com/vishaljhavu" target="_blank">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 20px !important;width: 86px !important;" >
-</a>
+| Parameter               | Type                                              | Default  | Description                                                   |
+|-------------------------|---------------------------------------------------|----------|---------------------------------------------------------------|
+| `sourceWidget`          | `Widget`                                          | required | The widget that toggles the dropdown on tap                   |
+| `dropdownWidget`        | `Widget`                                          | required | Reserved for custom dropdown header                           |
+| `data`                  | `List<T>`                                         | required | Items to display in the list                                  |
+| `itemBuilder`           | `Widget Function(BuildContext, int, T)`           | required | Builder for each list row                                     |
+| `controller`            | `InfiniteDropdownController?`                     | `null`   | Controller to call `stopLoading()` after pagination completes |
+| `onBottomRefresh`       | `Future<void> Function()?`                        | `null`   | Called when the user scrolls to the bottom of the list        |
+| `dropdownHeight`        | `double?`                                         | `120`    | Height of the dropdown overlay                                |
+| `spacing`               | `double?`                                         | `8.0`    | Gap between the source widget and the dropdown                |
+| `isSeparator`           | `bool`                                            | `false`  | Show a `Divider` between list items                           |
+| `progressIndicatorColor`| `Color?`                                          | `null`   | Color of the default loading indicator                        |
+| `customIndicator`       | `Widget?`                                         | `null`   | Replace the default loader with a custom widget               |
 
-### GitHub
-<a href="https://github.com/Zaveri21/flutter_infinite_dropdown">
-  <img src="https://img.shields.io/github/stars/Zaveri21/flutter_infinite_dropdown?style=social" alt="GitHub Stars" />
-</a>
-<a href="https://github.com/Zaveri21">
-  <img src="https://img.shields.io/github/followers/Zaveri21?label=Follow&style=social" alt="GitHub Followers" />
-</a>
+### InfiniteDropdownController
 
-### Say Thanks
-<a href="https://saythanks.io/to/Zaveri21" target="_blank">
-  <img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks" />
-</a>
+| Method          | Description                                       |
+|-----------------|---------------------------------------------------|
+| `stopLoading()` | Hides the loading indicator at the bottom of the list |
 
-## License
+---
 
-<a href="/LICENSE">
-  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" style="style="height: 20px">
-</a>
+## Examples
 
+### Basic dropdown
+
+```dart
+InfiniteDropdown<String>(
+  sourceWidget: Container(
+    width: 200,
+    height: 48,
+    color: Colors.blue,
+    child: const Center(
+      child: Text('Select an item', style: TextStyle(color: Colors.white)),
+    ),
+  ),
+  dropdownWidget: const SizedBox.shrink(),
+  data: const ['Option A', 'Option B', 'Option C'],
+  itemBuilder: (context, index, item) => ListTile(
+    title: Text(item),
+    onTap: () => debugPrint('Selected: $item'),
+  ),
+)
+```
+
+### Infinite scroll with pagination
+
+```dart
+class _MyState extends State<MyPage> {
+  final controller = InfiniteDropdownController();
+  List<String> items = List.generate(10, (i) => 'Item $i');
+
+  @override
+  Widget build(BuildContext context) {
+    return InfiniteDropdown<String>(
+      controller: controller,
+      sourceWidget: const Text('Open'),
+      dropdownWidget: const SizedBox.shrink(),
+      data: items,
+      dropdownHeight: 220,
+      isSeparator: true,
+      itemBuilder: (context, index, item) => ListTile(title: Text(item)),
+      onBottomRefresh: () async {
+        // Simulate network call
+        await Future.delayed(const Duration(seconds: 2));
+        setState(() {
+          items.addAll(List.generate(10, (i) => 'Item ${items.length + i}'));
+        });
+        controller.stopLoading();
+      },
+    );
+  }
+}
+```
+
+### Custom loading indicator
+
+```dart
+InfiniteDropdown<String>(
+  sourceWidget: const Text('Open'),
+  dropdownWidget: const SizedBox.shrink(),
+  data: items,
+  itemBuilder: (context, index, item) => ListTile(title: Text(item)),
+  customIndicator: const Padding(
+    padding: EdgeInsets.all(12),
+    child: Center(child: Text('Loading more…')),
+  ),
+)
+```
+
+---
+
+## Platform Support
+
+| Android | iOS | Web | macOS | Linux | Windows |
+|:-------:|:---:|:---:|:-----:|:-----:|:-------:|
+| ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+---
+
+## Additional Information
+
+- **Issues & feature requests**: [GitHub issue tracker](https://github.com/Zaveri21/flutter_infinite_dropdown/issues)
+- **Contributions**: Pull requests are welcome on [GitHub](https://github.com/Zaveri21/flutter_infinite_dropdown)
+
+---
+
+<p align="center">
+  <b>If this package saved you time, a coffee would be appreciated ☕</b><br/><br/>
+  <a href="https://www.buymeacoffee.com/vishaljhaveri" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="45">
+  </a>
+  <br/><br/>
+  <a href="/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License">
+  </a>
+  &nbsp;
+  <b>MIT © <a href="https://github.com/Zaveri21">Vishal Zaveri</a></b>
+</p>

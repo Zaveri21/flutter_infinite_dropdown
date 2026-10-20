@@ -1,7 +1,75 @@
-# https://dart.dev/guides/libraries/private-files
-# Created by `dart pub`
-.dart_tool/
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
 
-# Avoid committing pubspec.lock for library packages; see
-# https://dart.dev/guides/libraries/private-files#pubspeclock.
-pubspec.lock
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code
+.vscode/
+
+# Flutter/Dart/Pub related
+# Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
+/pubspec.lock
+**/doc/api/
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+/build/
+/coverage/
+
+# Dart generated files
+*.dart.js
+*.info.json
+*.js_
+*.js.deps
+*.js.map
+
+# Environment variables
+.env*
+
+# Example app — generated files that change with local environments
+example/pubspec.lock
+example/build/
+example/.dart_tool/
+example/.flutter-plugins
+example/.flutter-plugins-dependencies
+
+# Example Android
+example/android/.gradle/
+example/android/local.properties
+example/android/app/debug/
+example/android/app/profile/
+example/android/app/release/
+
+# Example iOS
+example/ios/Pods/
+example/ios/Podfile.lock
+example/ios/.symlinks/
+example/ios/Flutter/Flutter.framework
+example/ios/Flutter/Flutter.podspec
+example/ios/**/*.mode1v3
+example/ios/**/*.mode2v3
+example/ios/**/*.moved-aside
+example/ios/**/*.pbxuser
+!example/ios/**/*.pbxproj
+example/ios/**/*.perspectivev3
+example/ios/**/*.xccheckout
+example/ios/**/*.xcscmblueprint
+example/ios/**/*.xcuserstate
+example/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+example/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved

@@ -7,48 +7,49 @@ class InfiniteDropdownController {
     _dropdownState = dropdownState;
   }
 
-  /// stop dropdown loader
+  /// Stop the dropdown loading indicator after an API call.
   void stopLoading() {
     _dropdownState?.endBottomRefresh();
   }
 }
 
 class InfiniteDropdown<T> extends StatefulWidget {
-  /// dropdown controller to hide loader after api call
+  /// Controller to stop the loader after an API call completes.
   final InfiniteDropdownController? controller;
 
-  /// source widget bellow dropdown will display.
+  /// The widget that triggers the dropdown when tapped.
   final Widget sourceWidget;
 
-  /// dropdown custom widget
+  /// Custom widget reserved for future dropdown header use.
   final Widget dropdownWidget;
 
-  /// dropdown list type data
+  /// The list of items to display in the dropdown.
   final List<T> data;
 
-  /// dropdown item builder to custom dropdown list item
+  /// Builder for each dropdown list item.
   final Widget Function(BuildContext context, int index, T item) itemBuilder;
 
-  /// spacing between dropdown and source widget
+  /// Spacing between the source widget and the dropdown overlay. Defaults to 8.0.
   final double? spacing;
 
-  /// Dropdown height default 120
+  /// Height of the dropdown overlay. Defaults to 120.
   final double? dropdownHeight;
 
-  ///
+  /// Callback invoked when the user scrolls to the bottom of the list.
   final Future<void> Function()? onBottomRefresh;
 
-  /// display divider after each dropdown item
+  /// Whether to display a [Divider] between each list item. Defaults to false.
   final bool isSeparator;
 
-  /// progressIndicatorColor
+  /// Color of the default [CircularProgressIndicator] shown while loading.
   final Color? progressIndicatorColor;
 
-  /// custom widget to show custom loader
+  /// Custom loading widget shown at the bottom while fetching more data.
   final Widget? customIndicator;
 
-  InfiniteDropdown({
-    required this.controller,
+  const InfiniteDropdown({
+    super.key,
+    this.controller,
     required this.sourceWidget,
     required this.dropdownWidget,
     required this.data,
@@ -62,24 +63,27 @@ class InfiniteDropdown<T> extends StatefulWidget {
   });
 
   @override
-  State<InfiniteDropdown> createState() => InfiniteDropdownState<T>();
+  State<InfiniteDropdown<T>> createState() => InfiniteDropdownState<T>();
 }
 
 class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
   OverlayEntry? _overlayEntry;
-  ScrollController scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
   late ValueNotifier<bool> _loadingMoreNotifier;
 
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(_onScroll);
     _loadingMoreNotifier = ValueNotifier<bool>(false);
+    scrollController.addListener(_onScroll);
     widget.controller?.attach(this);
   }
 
   @override
   void dispose() {
+    // Remove the overlay before disposing to prevent memory leaks.
+    _overlayEntry?.remove();
+    _overlayEntry = null;
     scrollController.removeListener(_onScroll);
     scrollController.dispose();
     _loadingMoreNotifier.dispose();
@@ -88,16 +92,15 @@ class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
 
   void _onScroll() {
     if (!_loadingMoreNotifier.value &&
-        scrollController.position.pixels ==
+        scrollController.hasClients &&
+        scrollController.position.pixels >=
             scrollController.position.maxScrollExtent) {
-      // Load more items
-      setState(() {
-        _loadingMoreNotifier.value = true;
-      });
+      _loadingMoreNotifier.value = true;
 
-      // Scroll to the bottom
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+        if (scrollController.hasClients) {
+          scrollController.jumpTo(scrollController.position.maxScrollExtent);
+        }
         await widget.onBottomRefresh?.call();
       });
     }
@@ -107,69 +110,77 @@ class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
     _loadingMoreNotifier.value = false;
   }
 
+  void _openDropdown() {
+    final renderBox = context.findRenderObject() as RenderBox;
+    final size = renderBox.size;
+    final overlayPosition = renderBox.localToGlobal(Offset.zero);
+
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        left: overlayPosition.dx,
+        top: overlayPosition.dy + size.height + (widget.spacing ?? 0),
+        width: size.width,
+        child: Material(
+          elevation: 4.0,
+          child: SizedBox(
+            height: widget.dropdownHeight,
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: ValueListenableBuilder<bool>(
+                valueListenable: _loadingMoreNotifier,
+                builder: (context, isLoading, _) {
+                  return ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    controller: scrollController,
+                    itemCount:
+                        isLoading ? widget.data.length + 1 : widget.data.length,
+                    itemBuilder: (context, index) {
+                      if (index == widget.data.length && isLoading) {
+                        return widget.customIndicator ??
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: widget.progressIndicatorColor,
+                                ),
+                              ),
+                            );
+                      }
+                      return widget.itemBuilder(
+                          context, index, widget.data[index]);
+                    },
+                    separatorBuilder: (context, index) {
+                      return widget.isSeparator
+                          ? const Divider()
+                          : const SizedBox.shrink();
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    Overlay.of(context).insert(_overlayEntry!);
+  }
+
+  void _closeDropdown() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         if (_overlayEntry != null) {
-          _overlayEntry?.remove();
-          _overlayEntry = null;
+          _closeDropdown();
         } else {
-          final renderBox = context.findRenderObject() as RenderBox;
-          final size = renderBox.size;
-
-          final overlayPosition = renderBox.localToGlobal(Offset.zero);
-
-          _overlayEntry = OverlayEntry(
-            builder: (context) => Positioned(
-              left: overlayPosition.dx,
-              top: overlayPosition.dy + size.height + (widget.spacing ?? 0),
-              width: size.width,
-              child: Material(
-                elevation: 4.0,
-                child: SizedBox(
-                  height: widget.dropdownHeight,
-                  child: MediaQuery.removePadding(
-                    context: context,
-                    removeTop: true,
-                    child: ValueListenableBuilder<bool>(
-                      valueListenable: _loadingMoreNotifier,
-                      builder: (context, isLoading, _) {
-                        return ListView.separated(
-                          physics: BouncingScrollPhysics(),
-                          controller: scrollController,
-                          itemCount: isLoading
-                              ? widget.data.length + 1
-                              : widget.data.length,
-                          itemBuilder: (context, index) {
-                            if (index == widget.data.length && isLoading) {
-                              return widget.customIndicator ??
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 8.0),
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                          color: widget.progressIndicatorColor),
-                                    ),
-                                  );
-                            } else {
-                              return widget.itemBuilder(
-                                  context, index, widget.data[index]);
-                            }
-                          },
-                          separatorBuilder: (context, index) {
-                            return widget.isSeparator ? Divider() : Container();
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-
-          Overlay.of(context).insert(_overlayEntry!);
+          _openDropdown();
         }
       },
       child: widget.sourceWidget,
