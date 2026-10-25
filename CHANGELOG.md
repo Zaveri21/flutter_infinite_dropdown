@@ -1,3 +1,7 @@
+## 1.0.4
+
+- **Security:** Bumped minimum SDK to Dart ≥ 3.13.7 / Flutter ≥ 3.47.8 to address a Dart HTTPS certificate validation vulnerability. No API changes.
+
 ## 1.0.3
 
 - Bumped minimum SDK to Dart ≥ 3.5.0 / Flutter ≥ 3.24.0 (latest stable support).

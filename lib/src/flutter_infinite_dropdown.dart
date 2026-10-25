@@ -133,14 +133,16 @@ class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
                   return ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     controller: scrollController,
-                    itemCount:
-                        isLoading ? widget.data.length + 1 : widget.data.length,
+                    itemCount: isLoading
+                        ? widget.data.length + 1
+                        : widget.data.length,
                     itemBuilder: (context, index) {
                       if (index == widget.data.length && isLoading) {
                         return widget.customIndicator ??
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                              ),
                               child: Center(
                                 child: CircularProgressIndicator(
                                   color: widget.progressIndicatorColor,
@@ -149,7 +151,10 @@ class InfiniteDropdownState<T> extends State<InfiniteDropdown<T>> {
                             );
                       }
                       return widget.itemBuilder(
-                          context, index, widget.data[index]);
+                        context,
+                        index,
+                        widget.data[index],
+                      );
                     },
                     separatorBuilder: (context, index) {
                       return widget.isSeparator

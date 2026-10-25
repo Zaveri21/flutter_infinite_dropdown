@@ -6,9 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 // Helpers
 // ---------------------------------------------------------------------------
 
-Widget _buildApp({
-  required Widget child,
-}) {
+Widget _buildApp({required Widget child}) {
   return MaterialApp(
     home: Scaffold(body: Center(child: child)),
   );
@@ -28,10 +26,8 @@ InfiniteDropdown<String> _buildDropdown({
     sourceWidget: const Text('Open Dropdown'),
     dropdownWidget: const SizedBox.shrink(),
     data: data,
-    itemBuilder: (context, index, item) => ListTile(
-      key: Key('item_$index'),
-      title: Text(item),
-    ),
+    itemBuilder: (context, index, item) =>
+        ListTile(key: Key('item_$index'), title: Text(item)),
     onBottomRefresh: onBottomRefresh,
     isSeparator: isSeparator,
     progressIndicatorColor: progressIndicatorColor,
@@ -56,8 +52,9 @@ void main() {
 
     testWidgets('attaches to state after widget mounts', (tester) async {
       final controller = InfiniteDropdownController();
-      await tester
-          .pumpWidget(_buildApp(child: _buildDropdown(controller: controller)));
+      await tester.pumpWidget(
+        _buildApp(child: _buildDropdown(controller: controller)),
+      );
       // If attached, stopLoading should run without errors.
       expect(() => controller.stopLoading(), returnsNormally);
     });
@@ -80,9 +77,9 @@ void main() {
     });
 
     testWidgets('works with null controller', (tester) async {
-      await tester.pumpWidget(_buildApp(
-        child: _buildDropdown(controller: null),
-      ));
+      await tester.pumpWidget(
+        _buildApp(child: _buildDropdown(controller: null)),
+      );
       expect(find.text('Open Dropdown'), findsOneWidget);
     });
   });
@@ -91,8 +88,9 @@ void main() {
   // Open / close behaviour
   // -------------------------------------------------------------------------
   group('InfiniteDropdown — open / close', () {
-    testWidgets('tapping source widget opens the dropdown overlay',
-        (tester) async {
+    testWidgets('tapping source widget opens the dropdown overlay', (
+      tester,
+    ) async {
       await tester.pumpWidget(_buildApp(child: _buildDropdown()));
       await tester.tap(find.text('Open Dropdown'));
       await tester.pumpAndSettle();
@@ -102,8 +100,9 @@ void main() {
       expect(find.text('Gamma'), findsOneWidget);
     });
 
-    testWidgets('tapping source widget again closes the dropdown overlay',
-        (tester) async {
+    testWidgets('tapping source widget again closes the dropdown overlay', (
+      tester,
+    ) async {
       await tester.pumpWidget(_buildApp(child: _buildDropdown()));
 
       // Open
@@ -129,8 +128,9 @@ void main() {
   // Separator
   // -------------------------------------------------------------------------
   group('InfiniteDropdown — isSeparator', () {
-    testWidgets('shows Divider between items when isSeparator is true',
-        (tester) async {
+    testWidgets('shows Divider between items when isSeparator is true', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         _buildApp(child: _buildDropdown(isSeparator: true)),
       );
@@ -184,22 +184,26 @@ void main() {
   // Loading indicator
   // -------------------------------------------------------------------------
   group('InfiniteDropdown — loading indicator', () {
-    testWidgets('default CircularProgressIndicator is not visible initially',
-        (tester) async {
+    testWidgets('default CircularProgressIndicator is not visible initially', (
+      tester,
+    ) async {
       await tester.pumpWidget(_buildApp(child: _buildDropdown()));
       await tester.tap(find.text('Open Dropdown'));
       await tester.pumpAndSettle();
       expect(find.byType(CircularProgressIndicator), findsNothing);
     });
 
-    testWidgets('custom indicator widget is accepted without error',
-        (tester) async {
+    testWidgets('custom indicator widget is accepted without error', (
+      tester,
+    ) async {
       const customKey = Key('custom_loader');
-      await tester.pumpWidget(_buildApp(
-        child: _buildDropdown(
-          customIndicator: const SizedBox(key: customKey, height: 24),
+      await tester.pumpWidget(
+        _buildApp(
+          child: _buildDropdown(
+            customIndicator: const SizedBox(key: customKey, height: 24),
+          ),
         ),
-      ));
+      );
       await tester.tap(find.text('Open Dropdown'));
       await tester.pumpAndSettle();
       // Dropdown opens without error; custom indicator is only shown when loading.
@@ -207,68 +211,74 @@ void main() {
     });
 
     testWidgets(
-        'stopLoading via controller hides the loading indicator when loading',
-        (tester) async {
-      final controller = InfiniteDropdownController();
-      bool refreshCalled = false;
+      'stopLoading via controller hides the loading indicator when loading',
+      (tester) async {
+        final controller = InfiniteDropdownController();
+        bool refreshCalled = false;
 
-      final completer = Future<void>.value();
+        final completer = Future<void>.value();
 
-      await tester.pumpWidget(_buildApp(
-        child: _buildDropdown(
-          controller: controller,
-          data: List.generate(20, (i) => 'Item $i'),
-          onBottomRefresh: () async {
-            refreshCalled = true;
-            await completer;
-          },
-        ),
-      ));
+        await tester.pumpWidget(
+          _buildApp(
+            child: _buildDropdown(
+              controller: controller,
+              data: List.generate(20, (i) => 'Item $i'),
+              onBottomRefresh: () async {
+                refreshCalled = true;
+                await completer;
+              },
+            ),
+          ),
+        );
 
-      await tester.tap(find.text('Open Dropdown'));
-      await tester.pumpAndSettle();
+        await tester.tap(find.text('Open Dropdown'));
+        await tester.pumpAndSettle();
 
-      // Calling stopLoading directly should not throw.
-      expect(() => controller.stopLoading(), returnsNormally);
-      await tester.pump();
-      expect(refreshCalled, isFalse); // scroll not reached bottom yet
-    });
+        // Calling stopLoading directly should not throw.
+        expect(() => controller.stopLoading(), returnsNormally);
+        await tester.pump();
+        expect(refreshCalled, isFalse); // scroll not reached bottom yet
+      },
+    );
   });
 
   // -------------------------------------------------------------------------
   // Memory leak — dispose cleans up the overlay
   // -------------------------------------------------------------------------
   group('InfiniteDropdown — memory safety', () {
-    testWidgets('overlay is removed when widget is disposed with dropdown open',
-        (tester) async {
-      await tester.pumpWidget(_buildApp(child: _buildDropdown()));
+    testWidgets(
+      'overlay is removed when widget is disposed with dropdown open',
+      (tester) async {
+        await tester.pumpWidget(_buildApp(child: _buildDropdown()));
 
-      // Open the dropdown.
-      await tester.tap(find.text('Open Dropdown'));
-      await tester.pumpAndSettle();
-      expect(find.text('Alpha'), findsOneWidget);
+        // Open the dropdown.
+        await tester.tap(find.text('Open Dropdown'));
+        await tester.pumpAndSettle();
+        expect(find.text('Alpha'), findsOneWidget);
 
-      // Replace the entire widget tree, triggering dispose.
-      await tester.pumpWidget(
-        const MaterialApp(home: Scaffold(body: SizedBox.shrink())),
-      );
-      await tester.pumpAndSettle();
+        // Replace the entire widget tree, triggering dispose.
+        await tester.pumpWidget(
+          const MaterialApp(home: Scaffold(body: SizedBox.shrink())),
+        );
+        await tester.pumpAndSettle();
 
-      // Overlay entry must have been cleaned up.
-      expect(find.text('Alpha'), findsNothing);
-    });
+        // Overlay entry must have been cleaned up.
+        expect(find.text('Alpha'), findsNothing);
+      },
+    );
 
     testWidgets(
-        'overlay is removed when widget is disposed with dropdown closed',
-        (tester) async {
-      await tester.pumpWidget(_buildApp(child: _buildDropdown()));
-      // Dispose without ever opening the dropdown.
-      await tester.pumpWidget(
-        const MaterialApp(home: Scaffold(body: SizedBox.shrink())),
-      );
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-    });
+      'overlay is removed when widget is disposed with dropdown closed',
+      (tester) async {
+        await tester.pumpWidget(_buildApp(child: _buildDropdown()));
+        // Dispose without ever opening the dropdown.
+        await tester.pumpWidget(
+          const MaterialApp(home: Scaffold(body: SizedBox.shrink())),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+      },
+    );
 
     testWidgets('ScrollController is disposed without error', (tester) async {
       await tester.pumpWidget(_buildApp(child: _buildDropdown()));
@@ -297,15 +307,17 @@ void main() {
   // -------------------------------------------------------------------------
   group('InfiniteDropdown — generic type', () {
     testWidgets('works with int type', (tester) async {
-      await tester.pumpWidget(_buildApp(
-        child: InfiniteDropdown<int>(
-          sourceWidget: const Text('Open'),
-          dropdownWidget: const SizedBox.shrink(),
-          data: const [1, 2, 3],
-          itemBuilder: (context, index, item) => Text('$item'),
-          dropdownHeight: 200,
+      await tester.pumpWidget(
+        _buildApp(
+          child: InfiniteDropdown<int>(
+            sourceWidget: const Text('Open'),
+            dropdownWidget: const SizedBox.shrink(),
+            data: const [1, 2, 3],
+            itemBuilder: (context, index, item) => Text('$item'),
+            dropdownHeight: 200,
+          ),
         ),
-      ));
+      );
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
       expect(find.text('1'), findsOneWidget);
@@ -315,15 +327,17 @@ void main() {
 
     testWidgets('works with custom object type', (tester) async {
       final items = [_Item('Apple'), _Item('Mango')];
-      await tester.pumpWidget(_buildApp(
-        child: InfiniteDropdown<_Item>(
-          sourceWidget: const Text('Open'),
-          dropdownWidget: const SizedBox.shrink(),
-          data: items,
-          itemBuilder: (context, index, item) => Text(item.name),
-          dropdownHeight: 200,
+      await tester.pumpWidget(
+        _buildApp(
+          child: InfiniteDropdown<_Item>(
+            sourceWidget: const Text('Open'),
+            dropdownWidget: const SizedBox.shrink(),
+            data: items,
+            itemBuilder: (context, index, item) => Text(item.name),
+            dropdownHeight: 200,
+          ),
         ),
-      ));
+      );
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
       expect(find.text('Apple'), findsOneWidget);
@@ -336,18 +350,21 @@ void main() {
   // -------------------------------------------------------------------------
   group('InfiniteDropdown — onBottomRefresh', () {
     testWidgets(
-        'no error when onBottomRefresh is null and scroll bottom reached',
-        (tester) async {
-      await tester.pumpWidget(_buildApp(
-        child: _buildDropdown(
-          data: List.generate(5, (i) => 'Item $i'),
-          onBottomRefresh: null,
-        ),
-      ));
-      await tester.tap(find.text('Open Dropdown'));
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-    });
+      'no error when onBottomRefresh is null and scroll bottom reached',
+      (tester) async {
+        await tester.pumpWidget(
+          _buildApp(
+            child: _buildDropdown(
+              data: List.generate(5, (i) => 'Item $i'),
+              onBottomRefresh: null,
+            ),
+          ),
+        );
+        await tester.tap(find.text('Open Dropdown'));
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+      },
+    );
   });
 }
 

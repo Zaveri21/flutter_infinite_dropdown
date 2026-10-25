@@ -50,7 +50,7 @@ flutter pub add flutter_infinite_dropdown
 import 'package:flutter_infinite_dropdown/flutter_infinite_dropdown.dart';
 ```
 
-> **Requires** Flutter ≥ 3.24.0 · Dart ≥ 3.5.0
+> **Requires** Flutter ≥ 3.47.8 · Dart ≥ 3.13.7
 
 ---
 
